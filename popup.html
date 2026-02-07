@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: #333;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .header img {
+      width: 28px;
+      height: 28px;
+    }
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .section {
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* 语音设置 */
+    .voice-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .voice-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      background: #4a90d9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      min-width: 56px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .voice-select {
+      flex: 1;
+      font-size: 12px;
+      padding: 5px 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      color: #333;
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 24px;
+    }
+    .voice-select:hover {
+      border-color: #4a90d9;
+    }
+    .voice-select:focus {
+      border-color: #4a90d9;
+      box-shadow: 0 0 0 2px rgba(74, 144, 217, 0.15);
+    }
+    .voice-preview {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #999;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, background 0.15s;
+    }
+    .voice-preview:hover {
+      color: #4a90d9;
+      background: #f0f5ff;
+    }
+
+    .saved-msg {
+      font-size: 11px;
+      color: #4a90d9;
+      opacity: 0;
+      transition: opacity 0.2s;
+      margin-top: 4px;
+    }
+    .saved-msg.show {
+      opacity: 1;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 13px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #4a90d9;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+      font-size: 11px;
+      color: #bbb;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="icon">
+    <h1>划词翻译助手</h1>
+  </div>
+
+  <p class="desc">
+    在任意网页中选中文字，自动翻译为中/英/法三语，支持朗读发音。
+  </p>
+
+  <div class="section">
+    <div class="section-title">语音设置</div>
+
+    <div class="voice-row">
+      <span class="voice-label">中文</span>
+      <select class="voice-select" id="voice-zh"></select>
+      <button class="voice-preview" data-lang="zh" title="试听">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </button>
+    </div>
+
+    <div class="voice-row">
+      <span class="voice-label">English</span>
+      <select class="voice-select" id="voice-en"></select>
+      <button class="voice-preview" data-lang="en" title="试听">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </button>
+    </div>
+
+    <div class="voice-row">
+      <span class="voice-label">Français</span>
+      <select class="voice-select" id="voice-fr"></select>
+      <button class="voice-preview" data-lang="fr" title="试听">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+      </button>
+    </div>
+
+    <div class="saved-msg" id="saved-msg">已保存</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">功能说明</div>
+    <div class="feature"><span class="dot"></span>支持中文、英文、法语互译</div>
+    <div class="feature"><span class="dot"></span>自动识别源语言</div>
+    <div class="feature"><span class="dot"></span>每条结果可点击朗读发音</div>
+    <div class="feature"><span class="dot"></span>点击空白处关闭翻译框</div>
+  </div>
+
+  <div class="footer">v1.0.0 · 免费使用</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

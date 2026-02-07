@@ -1,0 +1,197 @@
+#translate-bubble {
+  display: none;
+  position: absolute;
+  z-index: 2147483647;
+  max-width: 400px;
+  min-width: 200px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  animation: translateFadeIn 0.15s ease-out;
+}
+
+@keyframes translateFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.translate-bubble-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #4a90d9;
+  color: #fff;
+}
+
+.translate-bubble-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.translate-bubble-close {
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+
+.translate-bubble-close:hover {
+  opacity: 1;
+}
+
+.translate-bubble-body {
+  padding: 10px 12px;
+}
+
+.translate-bubble-loading {
+  color: #999;
+  font-size: 13px;
+}
+
+.translate-bubble-loading::after {
+  content: "";
+  animation: translateDots 1.2s steps(3, end) infinite;
+}
+
+@keyframes translateDots {
+  0% { content: ""; }
+  33% { content: "."; }
+  66% { content: ".."; }
+  100% { content: "..."; }
+}
+
+/* 每条翻译结果行 */
+.translate-bubble-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.translate-bubble-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* 原文行样式 */
+.translate-bubble-row-source {
+  padding-top: 0;
+}
+
+.translate-bubble-row-source .translate-bubble-text {
+  color: #888;
+  font-size: 13px;
+}
+
+/* 语言标签 */
+.translate-bubble-lang {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: #4a90d9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 1px;
+}
+
+.translate-bubble-row-source .translate-bubble-lang {
+  background: #aaa;
+}
+
+/* 翻译文本 */
+.translate-bubble-text {
+  flex: 1;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* 词语 span 基础样式 */
+.translate-bubble-word {
+  transition: background 0.15s, color 0.15s;
+  border-radius: 3px;
+}
+
+/* 当前朗读到的词语高亮 */
+.translate-bubble-word.word-active {
+  background: #4a90d9;
+  color: #fff !important;
+  padding: 0 2px;
+  margin: 0 -2px;
+}
+
+/* 按钮容器 */
+.translate-bubble-btns {
+  flex-shrink: 0;
+  display: flex;
+  gap: 2px;
+  margin-top: 1px;
+}
+
+/* 朗读按钮通用 */
+.translate-bubble-speak {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 3px;
+  color: #999;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.translate-bubble-speak:hover {
+  color: #4a90d9;
+  background: #f0f5ff;
+}
+
+.translate-bubble-speak:active {
+  color: #2a6cb9;
+}
+
+/* 逐词按钮的区分色 */
+.translate-bubble-speak-word:hover {
+  color: #e67e22;
+  background: #fef5ec;
+}
+
+/* 朗读中行高亮 */
+.translate-bubble-row.speaking {
+  background: #eef4fc;
+  border-radius: 6px;
+  margin: 0 -6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.translate-bubble-row.speaking .translate-bubble-text {
+  color: #555;
+}
+
+.translate-bubble-row.speaking .translate-bubble-speak {
+  color: #4a90d9;
+  animation: speakPulse 1s ease-in-out infinite;
+}
+
+@keyframes speakPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
