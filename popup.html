@@ -111,6 +111,24 @@
       background: #f0f5ff;
     }
 
+    .inject-status {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      text-align: center;
+      background: #f0f0f0;
+      color: #999;
+    }
+    .inject-status.active {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .inject-status.error {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
     .saved-msg {
       font-size: 11px;
       color: #4a90d9;
@@ -152,8 +170,10 @@
     <h1>划词翻译助手</h1>
   </div>
 
+  <div class="inject-status" id="inject-status">正在激活...</div>
+
   <p class="desc">
-    在任意网页中选中文字，自动翻译为中/英/法三语，支持朗读发音。
+    点击插件图标激活当前页面，选中文字即可翻译为中/英/法三语。
   </p>
 
   <div class="section">

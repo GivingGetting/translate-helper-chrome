@@ -1,3 +1,9 @@
+// 防止重复注入
+if (window.__translateHelperInjected) {
+  // 已注入，不再执行
+} else {
+window.__translateHelperInjected = true;
+
 // 翻译浮层元素
 let bubble = null;
 
@@ -366,3 +372,5 @@ document.addEventListener("mousedown", (e) => {
     hideBubble();
   }
 });
+
+} // end else (injection guard)

@@ -12,7 +12,39 @@ const selects = {
 };
 
 const savedMsg = document.getElementById("saved-msg");
+const statusEl = document.getElementById("inject-status");
 let savedTimer = null;
+
+// 注入内容脚本到当前标签页
+async function injectContentScript() {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tab || !tab.id) return;
+
+    // 跳过 chrome:// 等特殊页面
+    if (!tab.url || tab.url.startsWith("chrome://") || tab.url.startsWith("chrome-extension://")) {
+      statusEl.textContent = "此页面不支持翻译";
+      statusEl.className = "inject-status error";
+      return;
+    }
+
+    // 注入 CSS 和 JS
+    await chrome.scripting.insertCSS({ target: { tabId: tab.id }, files: ["content.css"] });
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["content.js"] });
+
+    statusEl.textContent = "已激活 — 选中文字即可翻译";
+    statusEl.className = "inject-status active";
+  } catch (e) {
+    // 已注入过或页面不支持
+    if (e.message && e.message.includes("Cannot access")) {
+      statusEl.textContent = "此页面不支持翻译";
+      statusEl.className = "inject-status error";
+    } else {
+      statusEl.textContent = "已激活 — 选中文字即可翻译";
+      statusEl.className = "inject-status active";
+    }
+  }
+}
 
 // 填充下拉框中该语言可用的语音
 function populateVoices() {
@@ -101,6 +133,9 @@ function previewVoice(langKey) {
 
 // 初始化
 function init() {
+  // 打开弹窗时自动注入内容脚本
+  injectContentScript();
+
   populateVoices();
   loadSavedVoices();
 
