@@ -39,8 +39,12 @@ function populateVoices() {
     langVoices.forEach((v) => {
       const opt = document.createElement("option");
       opt.value = v.name;
-      // 显示名称，本地语音加标记
-      opt.textContent = v.localService ? `${v.name}` : `${v.name} (在线)`;
+      // 缩短显示名称：去掉 "Microsoft"/"Google" 前缀和括号中的语言说明
+      let displayName = v.name
+        .replace(/^(Microsoft|Google)\s*/i, "")
+        .replace(/\s*\(.*\)$/, "");
+      if (!v.localService) displayName += " *";
+      opt.textContent = displayName;
       select.appendChild(opt);
     });
 
